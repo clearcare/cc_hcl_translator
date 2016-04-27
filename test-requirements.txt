@@ -1,0 +1,8 @@
+-r requirements.txt
+boto
+boto3
+flake8
+moto==0.4.23
+pytest==2.7.0
+pytest-cov==1.8.1
+-e .

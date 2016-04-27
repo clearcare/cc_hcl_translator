@@ -1,0 +1,1 @@
+-e git+https://github.com/virtuald/pyhcl.git@0830b300774f94b930255bded91c08cb03c1df8e#egg=pyhcl
