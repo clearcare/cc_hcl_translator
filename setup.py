@@ -10,7 +10,7 @@ setup(
         'pyhcl',
     ],
     tests_require=['pytest', 'moto'],
-    version='0.1.0',
+    version='0.1.1',
     description='Translator for HCL configuration files',
     author='Derrick Petzold',
     author_email='dpetzold@clearcareonline.com',
