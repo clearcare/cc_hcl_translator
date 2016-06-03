@@ -13,7 +13,7 @@ dynamodb3_table_info = dynamodb3_translator(AWS_DYNAMODB_TF_PATH)
 @mock_dynamodb
 def test_get_table_info_key_schema():
 
-    table_info = dynamodb3_table_info.get_table_info('change_in_condition')
+    table_info = dynamodb3_table_info.get_table('change_in_condition')
     assert table_info['KeySchema'] == [
         {
             "KeyType": "HASH",
@@ -29,7 +29,7 @@ def test_get_table_info_key_schema():
 @mock_dynamodb
 def test_get_table_info_indexes():
 
-    table_info = dynamodb3_table_info.get_table_info('change_in_condition')
+    table_info = dynamodb3_table_info.get_table('change_in_condition')
     assert table_info["LocalSecondaryIndexes"] == [
         {
             "KeySchema": [
@@ -69,7 +69,7 @@ def test_get_table_info_indexes():
 @mock_dynamodb
 def test_get_table_info_global_indexes():
     import json
-    table_info = dynamodb3_table_info.get_table_info('change_in_condition')
+    table_info = dynamodb3_table_info.get_table('change_in_condition')
     print(json.dumps(table_info["GlobalSecondaryIndexes"], indent=4))
     assert table_info["GlobalSecondaryIndexes"] == [
         {
@@ -118,7 +118,7 @@ def test_get_table_info_global_indexes():
 @mock_dynamodb
 def test_get_table_info_attribute_definitions():
     import json
-    table_info = dynamodb3_table_info.get_table_info('change_in_condition')
+    table_info = dynamodb3_table_info.get_table('change_in_condition')
     print(json.dumps(table_info["AttributeDefinitions"], indent=4))
     assert table_info["AttributeDefinitions"] == [
         {

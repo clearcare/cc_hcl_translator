@@ -1,6 +1,6 @@
 resource "aws_dynamodb_table" "change_in_condition" {
     name                     = "${var.environment}_change_in_condition"
-    read_capacity            = "10"
+    read_capacity            = "${var.AgencyIndex_read_capacity}"
     write_capacity           = "10"
     hash_key                 = "carelog_id"
     range_key                = "time"

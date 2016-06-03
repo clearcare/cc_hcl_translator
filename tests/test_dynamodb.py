@@ -13,7 +13,7 @@ dynamodb_table_info = dynamodb_translator(AWS_DYNAMODB_TF_PATH)
 @mock_dynamodb
 def test_get_table_info_schema():
 
-    table_info = dynamodb_table_info.get_table_info('change_in_condition')
+    table_info = dynamodb_table_info.get_table('change_in_condition')
     assert table_info['schema'][0].definition() == {
         'AttributeName': 'carelog_id',
         'AttributeType': 'N',
@@ -28,7 +28,7 @@ def test_get_table_info_schema():
 @mock_dynamodb
 def test_get_table_info_indexes():
 
-    table_info = dynamodb_table_info.get_table_info('change_in_condition')
+    table_info = dynamodb_table_info.get_table('change_in_condition')
     assert table_info['indexes'][0].definition() == [
         {
             'AttributeName': 'carelog_id',
@@ -61,7 +61,7 @@ def test_get_table_info_indexes():
 @mock_dynamodb
 def test_get_table_info_global_indexes():
 
-    table_info = dynamodb_table_info.get_table_info('change_in_condition')
+    table_info = dynamodb_table_info.get_table('change_in_condition')
     assert table_info['global_indexes'][0].definition() == [
         {
             'AttributeName': 'saved_in_rdb',
