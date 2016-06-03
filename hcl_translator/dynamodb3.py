@@ -75,10 +75,13 @@ class Dynamodb3Translator(BaseDynamodbTranslator):
         if indexes_config is not None:
             metadata['LocalSecondaryIndexes'] = self._translate_index(indexes_config)
 
-        metadata['ProvisionedThroughput'] = {
-            'ReadCapacityUnits': int(table_data['read_capacity']),
-            'WriteCapacityUnits': int(table_data['write_capacity']),
-        }
+        try:
+            metadata['ProvisionedThroughput'] = {
+                'ReadCapacityUnits': int(table_data['read_capacity']),
+                'WriteCapacityUnits': int(table_data['write_capacity']),
+            }
+        except ValueError:
+            pass
 
         return metadata
 

@@ -68,9 +68,7 @@ def test_get_table_info_indexes():
 
 @mock_dynamodb
 def test_get_table_info_global_indexes():
-    import json
     table_info = dynamodb3_table_info.get_table('change_in_condition')
-    print(json.dumps(table_info["GlobalSecondaryIndexes"], indent=4))
     assert table_info["GlobalSecondaryIndexes"] == [
         {
             "KeySchema": [
@@ -117,9 +115,7 @@ def test_get_table_info_global_indexes():
 
 @mock_dynamodb
 def test_get_table_info_attribute_definitions():
-    import json
     table_info = dynamodb3_table_info.get_table('change_in_condition')
-    print(json.dumps(table_info["AttributeDefinitions"], indent=4))
     assert table_info["AttributeDefinitions"] == [
         {
             "AttributeName": "carelog_id",
