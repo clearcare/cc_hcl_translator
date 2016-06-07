@@ -5,8 +5,6 @@ setup(
     packages=find_packages(),
     dependency_links=['git+https://github.com/virtuald/pyhcl.git@0830b300774f94b930255bded91c08cb03c1df8e#egg=pyhcl'],
     install_requires=[
-        'boto>=2.31.1',
-        'boto3>=1.3.1',
         'pyhcl',
     ],
     tests_require=['pytest', 'moto'],
