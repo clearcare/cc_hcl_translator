@@ -8,7 +8,7 @@ setup(
         'pyhcl',
     ],
     tests_require=['pytest', 'moto'],
-    version='0.1.1',
+    version='0.1.2',
     description='Translator for HCL configuration files',
     author='Derrick Petzold',
     author_email='dpetzold@clearcareonline.com',
