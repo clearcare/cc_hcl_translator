@@ -42,18 +42,22 @@ class DynamodbTranslator(BaseDynamodbTranslator):
             kwargs['parts'].append(self._translate_attribute(range_key, 'range_key', attributes))
         return kwargs
 
+    def _translate_index(self, index, attributes, is_global=False):
+        index_type = getattr(
+            fields,
+            self._translate_projection_key(index['projection_type'], is_global=is_global)
+        )
+        kwargs = self._translate_index_kwargs(index, attributes)
+        return index_type(index['name'], **kwargs)
+
     def _translate_indexes(self, indexes, attributes, is_global=False):
         if not isinstance(indexes, (list, tuple)):
             indexes = [indexes]
-
         translated = []
         for index_details in indexes:
-            index_type = getattr(
-                fields,
-                self._translate_projection_key(index_details['projection_type'], is_global=is_global)
+            translated.append(
+                self._translate_index(index_details, attributes, is_global)
             )
-            kwargs = self._translate_index_kwargs(index_details, attributes)
-            translated.append(index_type(index_details['name'], **kwargs))
         return translated
 
     def get_table(self, table_name):
