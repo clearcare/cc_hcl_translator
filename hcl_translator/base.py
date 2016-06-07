@@ -23,7 +23,7 @@ class BaseDynamodbTranslator(object):
                     index_data = table_data[field]
                     if index_data['name'] == index_name:
                         attributes = self._translate_attributes(table_data['attribute'])
-                        return self.build_index(
+                        return self._translate_index(
                               index_data, attributes, False if field.startswith('local') else True)
 
     def list_table_names(self):
