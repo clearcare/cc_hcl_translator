@@ -31,15 +31,19 @@ class DynamodbTranslator(BaseDynamodbTranslator):
         return schema
 
     def _translate_index_kwargs(self, index_details, attributes):
-        hash_key = index_details['hash_key']
         kwargs = {
-            'parts': [
-                self._translate_attribute(hash_key, 'hash_key', attributes),
-            ],
+            'parts': [],
         }
+        hash_key = index_details.get('hash_key')
+        if hash_key:
+            kwargs['parts'].append(
+                self._translate_attribute(hash_key, 'hash_key', attributes),
+            )
         range_key = index_details.get('range_key')
         if range_key:
-            kwargs['parts'].append(self._translate_attribute(range_key, 'range_key', attributes))
+            kwargs['parts'].append(
+                self._translate_attribute(range_key, 'range_key', attributes),
+            )
         return kwargs
 
     def _translate_index(self, index, attributes, is_global=False):
