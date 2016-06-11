@@ -21,6 +21,8 @@ class BaseDynamodbTranslator(object):
             for field, value in table_data.iteritems():
                 if field.endswith('index'):
                     index_data = table_data[field]
+                    if isinstance(index_data, list):
+                        index_data = index_data[0]
                     if index_data['name'] == index_name:
                         attributes = self._translate_attributes(table_data['attribute'])
                         return self._translate_index(
@@ -28,6 +30,3 @@ class BaseDynamodbTranslator(object):
 
     def list_table_names(self):
         return self.terraform_config['resource']['aws_dynamodb_table'].keys()
-
-    def get_table(self, table_name):
-        raise NotImplemented

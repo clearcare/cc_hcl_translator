@@ -46,13 +46,17 @@ class Dynamodb3Translator(BaseDynamodbTranslator):
                 'ProjectionType': index_data['projection_type'].upper(),
             }
 
-            read_capacity = index_data.get('read_capacity')
-            write_capacity = index_data.get('write_capacity')
-            if read_capacity and write_capacity:
-                attributes['ProvisionedThroughput'] = {
-                    'ReadCapacityUnits': int(read_capacity),
-                    'WriteCapacityUnits': int(write_capacity)
-                }
+            try:
+                read_capacity = int(index_data.get('read_capacity'))
+                write_capacity = int(index_data.get('write_capacity'))
+            except ValueError:
+                pass
+            else:
+                if read_capacity and write_capacity:
+                    attributes['ProvisionedThroughput'] = {
+                        'ReadCapacityUnits': read_capacity,
+                        'WriteCapacityUnits': write_capacity,
+                    }
             translated.append(attributes)
         return translated
 

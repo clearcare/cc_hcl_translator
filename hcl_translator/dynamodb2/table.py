@@ -1,10 +1,12 @@
+from __future__ import absolute_import
+
 from boto.dynamodb2 import fields
 
-from .base import BaseDynamodbTranslator
-from .exceptions import UnknownTableException
+from hcl_translator.base import BaseDynamodbTranslator
+from hcl_translator.exceptions import UnknownTableException
 
 
-class DynamodbTranslator(BaseDynamodbTranslator):
+class Dynamodb2TableTranslator(BaseDynamodbTranslator):
 
     def _translate_projection_key(self, projection_key, is_global=False):
         return '{}{}Index'.format('Global' if is_global else '', projection_key.title())
@@ -64,16 +66,11 @@ class DynamodbTranslator(BaseDynamodbTranslator):
             )
         return translated
 
-    def get_table(self, table_name):
+    def table_kwargs(self, table_name):
 
         try:
             table = self.terraform_config['resource']['aws_dynamodb_table'][table_name]
         except KeyError:
-            self.logger.exception('cc_dynamodb.UnknownTable', extra=dict(
-                table_name=table_name,
-                table=table_name,
-                DTM_EVENT='cc_dynamodb.UnknownTable'),
-            )
             raise UnknownTableException('Unknown table: %s' % table_name)
 
         attributes = self._translate_attributes(table['attribute'])
@@ -84,7 +81,8 @@ class DynamodbTranslator(BaseDynamodbTranslator):
 
         global_secondary_index = table.get('global_secondary_index')
         if global_secondary_index is not None:
-            metadata['global_indexes'] = self._translate_indexes(global_secondary_index, attributes, is_global=True)
+            metadata['global_indexes'] = self._translate_indexes(
+                global_secondary_index, attributes, is_global=True)
 
         local_secondary_index = table.get('local_secondary_index')
         if local_secondary_index is not None:
@@ -92,4 +90,4 @@ class DynamodbTranslator(BaseDynamodbTranslator):
 
         return metadata
 
-dynamodb_translator = DynamodbTranslator
+dynamodb2_table_translator = Dynamodb2TableTranslator
